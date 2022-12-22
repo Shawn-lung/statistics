@@ -5,21 +5,22 @@ import matplotlib.dates as dates
 import datetime
 
 class Data:
-    def __init__(self,name,year):
+    def __init__(self,name,year,month):
         self.name = name
-        self.date = self.set_date(year)
+        self.month = month
+        self.date = self.set_date(year,month)
         self.data = []
         self.sub = []
     
-    def set_date(self,year):
-        self.years = int((datetime.datetime.now()-pd.Timestamp(year+'-12-01')).days/365)+1
-        return(pd.Timestamp(year+'-12-01'))
+    def set_date(self,year,month):
+        self.years = int((datetime.datetime.now()-pd.Timestamp(year+'-'+month+'-01')).days/365)+1
+        return(pd.Timestamp(year+'-'+month+'-01'))
     
     def get_data(self):
         for i in range(self.years):
             start_date = self.date+pd.DateOffset(years=i)
             print(start_date) 
-            end_date = start_date+pd.DateOffset(months=1)
+            end_date = start_date+pd.DateOffset(months=12-int(self.month)+1)
             if end_date > datetime.datetime.now():
                 end_date = datetime.datetime.now()
             print(end_date)
@@ -44,9 +45,10 @@ class Data:
     def draw_data(self):
         for i in range(self.years):
             plt.subplot(self.sub[1],self.sub[0],i+1)
+            plt.title(self.name)
             plt.plot(self.data[i]['Adj Close'])
             axes = plt.gca()
-            axes.xaxis.set_major_locator(dates.DayLocator(interval=10))
+            axes.xaxis.set_major_locator(dates.DayLocator(interval=8*(12-int(self.month)+1)))
         plt.show()
         
 
