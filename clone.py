@@ -45,7 +45,6 @@ class Data:
     def draw_data(self):
         for i in range(self.years):
             plt.subplot(self.sub[1],self.sub[0],i+1)
-            plt.title(self.name)
             plt.plot(self.data[i]['Adj Close'])
             axes = plt.gca()
             axes.xaxis.set_major_locator(dates.DayLocator(interval=8*(12-int(self.month)+1)))
