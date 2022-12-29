@@ -8,25 +8,28 @@ def setmonth(month):
     else:
         return(month-1)    
 
-monthlyreturn = []
+def p_or_m(value):
+    if value <= 0:
+        return 0
+    else:
+        return 1
+
+
+monthlyp = []
 month = []
 color1 = []
 
-df = yf.download(tickers='SPY',period='max',interval = '1mo')
+df = yf.download(tickers='SPY',period='max',interval = '1d')
 df = df.dropna()
 df['Return'] = (df['Adj Close']/df['Adj Close'].shift(1))-1
 df = df.dropna()
 df['Month'] = df.index.month
 df['Month'] = df['Month'].apply(setmonth)
-
+df['PlusorMinus'] = df['Return'].apply(p_or_m)
+print(df)
 for i in range(12):
-    monthlyreturn.append(df[df['Month'] == i+1]['Return'].mean())
+    monthlyp.append(df[df['Month'] == i+1]['PlusorMinus'].mean())
     month.append(str(i+1))
-    if i == 11:
-        color1.append('blue')
-    elif df[df['Month'] == i+1]['Return'].mean() > 0 :
-        color1.append('red')
-    else:
-        color1.append('green')
-plt.bar(x=month,height=monthlyreturn,color = color1)
+
+plt.bar(x=month,height=monthlyp)
 plt.show()
