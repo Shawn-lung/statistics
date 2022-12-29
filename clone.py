@@ -13,7 +13,7 @@ class Data:
         self.sub = []
     
     def set_date(self,year,month):
-        self.years = int((datetime.datetime.now()-pd.Timestamp(year+'-'+month+'-01')).days/365)+1
+        self.years = int((datetime.datetime.now()-pd.Timestamp(year+'-'+month+'-01')).days/365.25)+1
         return(pd.Timestamp(year+'-'+month+'-01'))
     
     def get_data(self):
