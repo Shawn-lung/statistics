@@ -21,6 +21,7 @@ color1 = []
 
 df = yf.download(tickers='SPY',period='max',interval = '1mo')
 df = df.dropna()
+
 df['Return'] = (df['Adj Close']/df['Adj Close'].shift(1))-1
 df = df.dropna()
 df['Month'] = df.index.month
