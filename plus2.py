@@ -17,7 +17,7 @@ for n in range (len(liststock)):
     color1 = []
     dfavg = []
     xvalue = []
-    df=yf.download(tickers=liststock[n],interval = '1mo',start='2018-12-01',end=datetime.datetime.now())
+    df=yf.download(tickers=liststock[n],interval = '1mo',start='2018-12-01',end='2022-12-31')
     df = df.dropna()
     df['Return'] = (df['Adj Close']/df['Adj Close'].shift(1))-1
     df = df.dropna()
@@ -29,10 +29,12 @@ for n in range (len(liststock)):
     df['Year'] = df.index.year
     for i in df['Year'].unique():
         dfavg.append(df[df['Year'] == i]['Return'].mean())
+    print(len(dfavg))
+    print(len(dfdec['Return']))
     for i in range(len(dfdec)-len(dfavg)):
         dfdec=dfdec.drop(index = dfdec.tail(1).index)
-    print(dfavg)
-    print(dfdec['Return'])
+    print(len(dfavg))
+    print(len(dfdec['Return']))
     years = dfdec.index.year
     ax = plt.subplot(3,4,n+1)
     x = np.arange(len(years))
