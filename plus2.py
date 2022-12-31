@@ -24,6 +24,7 @@ for n in range (len(liststock)):
     df['Month'] = df.index.month
     df['Month'] = df['Month'].apply(setmonth)  
     dfdec = df[df['Month'] == 12]
+    print(df.loc[df['Month'] == 12])
     df = df.drop(index = df.loc[df['Month'] == 12].index)
     df['Year'] = df.index.year
     for i in df['Year'].unique():
