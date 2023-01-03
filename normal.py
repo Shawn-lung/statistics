@@ -15,6 +15,7 @@ r_values = list(range(n + 1))
 Mean, var = binom.stats(n, p)
 print(var)
 Std = (var**(1/2))
+print(Std)
 Std = Std/(n**(1/2))
 print(Std)
 # list of pmf values
